@@ -15,6 +15,9 @@ int main() {
         return 1;
     }
 
+    // Đổi lại thành www.google.com theo đúng yêu cầu của đồ án.
+    // Việc nhận lại Status 301 Moved Permanently là hoàn toàn bình thường 
+    // và là đối tượng chính để phân tích trên Wireshark.
     const char* hostname = "www.google.com";
     const char* port = "80";
 
@@ -55,6 +58,7 @@ int main() {
     std::cout << "-> Connection established!" << std::endl << std::endl;
 
     // 5. Send HTTP GET Request
+    // Cập nhật lại header Host thành www.google.com
     std::string request = 
         "GET / HTTP/1.1\r\n"
         "Host: www.google.com\r\n"
@@ -76,6 +80,7 @@ int main() {
     int bytes_received;
     std::string response = "";
 
+    // Nhận dữ liệu cho tới khi server đóng kết nối
     while ((bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
         buffer[bytes_received] = '\0';
         response += buffer;
